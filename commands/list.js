@@ -8,7 +8,7 @@ module.exports = {
     usage: "list",
     run: function (client, args, message) {
         //@ts-ignore
-        if (global.Emojis.length <= 0) {
+        if (!global.Emojis || global.Emojis.length <= 0) {
             message.channel.send("This server has no emojis!");
             return;
         }
