@@ -7,14 +7,14 @@ module.exports = {
     usage: "list",
     run: function(client: Discord.Client, args: Array<string>, message: Discord.Message) {
         
-        
         //@ts-ignore
-        const emojis: Array<Array<any>> = Object.entries(global.Emojis)
-
-        if (emojis.length <= 0) {
+        if (global.Emojis.length <= 0) {
             message.channel.send("This server has no emojis!")
             return;
         }
+
+        //@ts-ignore
+        const emojis: Array<Array<any>> = Object.entries(global.Emojis)
 
         var page = 1
         var perPage = 5

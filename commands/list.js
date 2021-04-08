@@ -8,11 +8,12 @@ module.exports = {
     usage: "list",
     run: function (client, args, message) {
         //@ts-ignore
-        const emojis = Object.entries(global.Emojis);
-        if (emojis.length <= 0) {
+        if (global.Emojis.length <= 0) {
             message.channel.send("This server has no emojis!");
             return;
         }
+        //@ts-ignore
+        const emojis = Object.entries(global.Emojis);
         var page = 1;
         var perPage = 5;
         message.channel.send(makeDesc(page, perPage, emojis)).then(async (msg) => {
