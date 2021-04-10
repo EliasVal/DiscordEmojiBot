@@ -9,12 +9,12 @@ module.exports = {
     run: function(client: Discord.Client, args: Array<string>, message: Discord.Message) {
 
         // @ts-ignore
-        const found = message.member.roles.cache.array().some(r=> global.disallowedRoles.indexOf(r) >= 0)
+        const found = message.member.roles.cache.array().some(r=> global.AllowedRoles.indexOf(r) >= 0)
         if (!message.member.hasPermission("ADMINISTRATOR") && !found) return;
 
 
         // @ts-ignore
-        let disallowedChannels: Array<string> = global.disallowedChannels ? global.disallowedChannels : []
+        let disallowedChannels: Array<string> = global.DisallowedChannels ? global.DisallowedChannels : []
 
         switch (args[0]) {
             case "add":
@@ -53,7 +53,7 @@ module.exports = {
                 })
             break;
             default:
-                const embed = new Discord.MessageEmbed().setTitle("disallowed Channels:").setDescription("")
+                const embed = new Discord.MessageEmbed().setTitle("Disallowed Channels:").setDescription("")
                 if (disallowedChannels.length > 0)
                 {
                     for (var channel of disallowedChannels) {
