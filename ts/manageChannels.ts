@@ -9,12 +9,12 @@ module.exports = {
     run: function(client: Discord.Client, args: Array<string>, message: Discord.Message) {
 
         // @ts-ignore
-        const found = message.member.roles.cache.array().some(r=> global.AllowedRoles.indexOf(r) >= 0)
+        const found = message.member.roles.cache.array().some(r=> global.disallowedRoles.indexOf(r) >= 0)
         if (!message.member.hasPermission("ADMINISTRATOR") && !found) return;
 
 
         // @ts-ignore
-        let allowedChannels: Array<string> = global.AllowedChannels ? global.AllowedChannels : []
+        let disallowedChannels: Array<string> = global.disallowedChannels ? global.disallowedChannels : []
 
         switch (args[0]) {
             case "add":
@@ -25,10 +25,10 @@ module.exports = {
                     return;
                 }
 
-                allowedChannels.push(targetChannel.id)
+                disallowedChannels.push(targetChannel.id)
 
-                Firebase.database().ref("/AllowedChannels").set(allowedChannels, (e) => {
-                    message.channel.send(`Successfully added ${targetChannel} to the allowed channels!`)
+                Firebase.database().ref("/DisallowedChannels").set(disallowedChannels, (e) => {
+                    message.channel.send(`Successfully added ${targetChannel} to the disallowed channels!`)
                 })
             break;
             case "remove":
@@ -39,29 +39,29 @@ module.exports = {
                     return;
                 }
 
-                if (!allowedChannels.includes(targetChannel.id)) {
-                    message.channel.send("The provided channel isn't present in the allowed channels list!")
+                if (!disallowedChannels.includes(targetChannel.id)) {
+                    message.channel.send("The provided channel isn't present in the disallowed channels list!")
                     return;
                 }
 
 
 
-                allowedChannels.splice(allowedChannels.indexOf(targetChannel.id), 1)
+                disallowedChannels.splice(disallowedChannels.indexOf(targetChannel.id), 1)
 
-                Firebase.database().ref("/AllowedChannels").set(allowedChannels, (e) => {
-                    message.channel.send(`Successfully removed ${targetChannel} from the allowed channels!`)
+                Firebase.database().ref("/DisallowedChannels").set(disallowedChannels, (e) => {
+                    message.channel.send(`Successfully removed ${targetChannel} from the disallowed channels!`)
                 })
             break;
             default:
-                const embed = new Discord.MessageEmbed().setTitle("Allowed Channels:").setDescription("")
-                if (allowedChannels.length > 0)
+                const embed = new Discord.MessageEmbed().setTitle("disallowed Channels:").setDescription("")
+                if (disallowedChannels.length > 0)
                 {
-                    for (var channel of allowedChannels) {
+                    for (var channel of disallowedChannels) {
                         embed.description += `<#${channel}>\n`
                     }
                 }
                 else {
-                    embed.description = "There are no allowed channels!"
+                    embed.description = "There are no disallowed channels!"
                 }
                 
                 message.channel.send(embed)

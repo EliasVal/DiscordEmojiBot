@@ -9,7 +9,7 @@ module.exports = {
         
 
         //@ts-ignore
-        if (!global.AllowedChannels.includes(message.channel.id)) {
+        if (!global.DisallowedChannels.includes(message.channel.id)) {
             message.channel.send("You're not allowed to do this here!")    
             return
         };

@@ -21,7 +21,7 @@ const db = firebase.database()
 db.ref("/").on('value', async (snapshot) => {
     const data = await snapshot.val()
     global.Emojis = data.Emojis
-    global.AllowedChannels = data.AllowedChannels
+    global.DisallowedChannels = data.DisallowedChannels
     global.AllowedRoles = data.AllowedRoles
     client.login(process.env.TOKEN)
 })

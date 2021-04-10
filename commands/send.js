@@ -7,7 +7,7 @@ module.exports = {
     usage: "emoji/emote {emote name}",
     run: function (client, args, message) {
         //@ts-ignore
-        if (!global.AllowedChannels.includes(message.channel.id)) {
+        if (global.DisallowedChannels.includes(message.channel.id)) {
             message.channel.send("You're not allowed to do this here!");
             return;
         }
@@ -16,6 +16,8 @@ module.exports = {
         if (global.Emojis && Object.keys(global.Emojis).includes(args[0])) {
             //@ts-ignore
             message.channel.send(global.Emojis[args[0]].url);
+            if (message.deletable)
+                message.delete();
         }
     }
 };
