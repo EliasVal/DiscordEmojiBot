@@ -7,6 +7,14 @@ module.exports = {
     usage: "list",
     run: function(client: Discord.Client, args: Array<string>, message: Discord.Message) {
         
+
+        //@ts-ignore
+        if (!global.AllowedChannels.includes(message.channel.id)) {
+            message.channel.send("You're not allowed to do this here!")    
+            return
+        };
+
+
         //@ts-ignore
         if (!global.Emojis || global.Emojis.length <= 0) {
             message.channel.send("This server has no emojis!")

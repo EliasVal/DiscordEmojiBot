@@ -19,7 +19,10 @@ firebase.initializeApp({
 const db = firebase.database()
 
 db.ref("/").on('value', async (snapshot) => {
-    global.Emojis = await snapshot.val()
+    const data = await snapshot.val()
+    global.Emojis = data.Emojis
+    global.AllowedChannels = data.AllowedChannels
+    global.AllowedRoles = data.AllowedRoles
     client.login(process.env.TOKEN)
 })
 

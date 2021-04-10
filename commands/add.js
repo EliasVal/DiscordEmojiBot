@@ -14,7 +14,9 @@ module.exports = {
     description: "Sends an emoji!",
     usage: "add/append {emoji name} {link to image or GIF} {size: 32, 64, 128}",
     run: function (client, args, message) {
-        if (!message.member.hasPermission("ADMINISTRATOR"))
+        // @ts-ignore
+        const found = message.member.roles.cache.array().some(r => global.AllowedRoles.indexOf(r) >= 0);
+        if (!message.member.hasPermission("ADMINISTRATOR") && !found)
             return;
         if (args.length < 3) {
             // @ts-ignore
@@ -44,7 +46,7 @@ module.exports = {
                 //@ts-ignore
                 client.guilds.cache.get("687228588822757387").channels.cache.get("828913714647662623").send(new Discord.MessageAttachment(`./temp/${message.id}.${imageType}`)).then((msg) => {
                     //msg.attachments.first().url
-                    Firebase.database().ref(`/${args[0]}`).set({
+                    Firebase.database().ref(`/Emojis/${args[0]}`).set({
                         url: msg.attachments.first().url,
                         size: args[2],
                         isGif: imageType == "gif"
@@ -74,7 +76,7 @@ module.exports = {
                             //@ts-ignore
                             client.guilds.cache.get("687228588822757387").channels.cache.get("828913714647662623").send(new Discord.MessageAttachment(`./temp/${message.id}.${imageType}`)).then((msg) => {
                                 //msg.attachments.first().url
-                                Firebase.database().ref(`/${args[0]}`).set({
+                                Firebase.database().ref(`/Emojis/${args[0]}`).set({
                                     url: msg.attachments.first().url,
                                     size: args[2],
                                     isGif: imageType == "gif"

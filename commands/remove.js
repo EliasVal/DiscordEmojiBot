@@ -7,7 +7,9 @@ module.exports = {
     description: "Removes an emoji from the emoji list!",
     usage: "remove {emote name}",
     run: function (client, args, message) {
-        if (!message.member.hasPermission("ADMINISTRATOR"))
+        // @ts-ignore
+        const found = message.member.roles.cache.array().some(r => global.AllowedRoles.indexOf(r) >= 0);
+        if (!message.member.hasPermission("ADMINISTRATOR") && !found)
             return;
         if (args.length < 1) {
             // @ts-ignore
@@ -19,7 +21,7 @@ module.exports = {
             message.channel.send("This emoji doesn't exist!");
             return;
         }
-        Firebase.database().ref(`/${args[0]}`).set(null).then(() => {
+        Firebase.database().ref(`/Emojis/${args[0]}`).set(null).then(() => {
             message.channel.send(`Successfully deleted the ${args[0]} emoji!`);
         });
     }
