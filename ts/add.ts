@@ -15,7 +15,7 @@ module.exports = {
     usage: "add/append {emoji name} {link to image or GIF} {size: 32, 64, 128}",
     run: function(client: Discord.Client, args: Array<string>, message: Discord.Message) {
         // @ts-ignore
-        const found = message.member.roles.cache.array().some(r=> global.AllowedRoles.indexOf(r) >= 0)
+        const found = message.member.roles.cache.array().some(r=> global.AllowedRoles.indexOf(r.id) >= 0)
         if (!message.member.hasPermission("ADMINISTRATOR") && !found) return;
 
         if (args.length < 3) {

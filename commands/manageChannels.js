@@ -9,7 +9,7 @@ module.exports = {
     usage: "channels [add/remove] [#channel/channelID]",
     run: function (client, args, message) {
         // @ts-ignore
-        const found = message.member.roles.cache.array().some(r => global.AllowedRoles.indexOf(r) >= 0);
+        const found = message.member.roles.cache.array().some(r => global.AllowedRoles.indexOf(r.id) >= 0);
         if (!message.member.hasPermission("ADMINISTRATOR") && !found)
             return;
         // @ts-ignore
